@@ -151,11 +151,46 @@
       border: none;
       padding: 0.4em 0.6em;
     }
+    /* --- Custom file input styles --- */
+    .file-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1em 0;
+      width: 100%;
+    }
+    #file-input {
+      opacity: 0;
+      width: 0.1px;
+      height: 0.1px;
+      position: absolute;
+      z-index: -1;
+    }
+    .file-label {
+      display: inline-block;
+      padding: 0.7em 1.3em;
+      background: #6d1c1c;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background 0.2s;
+      border: none;
+    }
+    .file-label:hover {
+      background: #882222;
+    }
+    #file-name {
+      color: #ffc;
+      margin-left: 1em;
+      word-break: break-all;
+      font-size: 0.95em;
+    }
   </style>
 </head>
 <body>
 <main class="container">
-  <!-- Replace "logo.png" with your own logo (must match manifest!) -->
   <img src="logo.png" alt="Logo" class="logo-top">
   <div id="main"></div>
 </main>
@@ -187,7 +222,11 @@
   function showAdd() {
     mainDiv.innerHTML = `
       <form>
-        <input type="file" id="file-input" accept="image/*" capture="environment">
+        <div class="file-input-wrapper">
+          <input type="file" id="file-input" accept="image/*" capture="environment">
+          <label for="file-input" class="file-label">Take or Choose Photo</label>
+          <span id="file-name"></span>
+        </div>
         <div id="preview"></div>
         <div style="display:flex; gap:0.5em;">
           <button type="button" id="scan-btn" disabled>Save</button>
@@ -203,6 +242,7 @@
         </div>
       </form>`;
     const fi = document.getElementById('file-input'),
+          fileNameSpan = document.getElementById('file-name'),
           pb = document.getElementById('preview'),
           saveBtn = document.getElementById('scan-btn'),
           manualBtn = document.getElementById('manual-btn'),
@@ -211,6 +251,7 @@
 
     fi.onchange = () => {
       const file = fi.files[0];
+      fileNameSpan.textContent = file ? file.name : '';
       if (!file) return;
       const url = URL.createObjectURL(file);
       pb.innerHTML = `
