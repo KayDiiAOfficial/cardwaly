@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CardWALY</title>
   <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link rel="icon" href="logo.png" sizes="192x192">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#A62C2C">
   <style>
     body, html, main, #main { background: #A62C2C; color: #fff; }
     main.container {
@@ -124,7 +126,7 @@
 </head>
 <body>
 <main class="container">
-  <!-- Replace with your logo source below! -->
+  <!-- Replace "logo.png" with your own logo (must match manifest!) -->
   <img src="logo.png" alt="Logo" class="logo-top">
   <div id="main"></div>
 </main>
@@ -164,7 +166,7 @@
         <div id="camera-preview"></div>
         <div id="manual-entry-container">
           <label for="manual-barcode" style="margin-top:1em;">Enter Barcode Number</label>
-          <input type="text" id="manual-barcode" placeholder="e.g. 7000849292276339">
+          <input type="text" id="manual-barcode" placeholder="e.g. 7000849291234567">
           <button type="button" id="manual-save-btn">Save Barcode</button>
         </div>
       </form>`;
@@ -239,37 +241,48 @@
   }
 
   function showCard(idx) {
-  const card = cards[idx];
-  mainDiv.innerHTML = `
-    <section class="big-barcode">
-      <svg id="barcode"></svg>
-      <h2 style="margin:0.5em 0 0 0">${card.label}</h2>
-      <p style="margin:0">${card.code}</p>
-    </section>
-    <div class="barcode-controls">
-      <button id="back-btn">← Back</button>
-      <button id="delete-btn" class="secondary">Delete</button>
-    </div>
-  `;
-  document.getElementById('back-btn').onclick = renderList;
-  document.getElementById('delete-btn').onclick = () => {
-    if (confirm("Are you sure you want to delete this card?")) {
-      cards.splice(idx, 1);
-      save();
-      renderList();
-    }
-  };
-  JsBarcode("#barcode", sanitize(card.code), {
-    format: "CODE128",
-    width: sanitize(card.code).length > 12 ? 1 : 2,
-    height: 120,
-    displayValue: true,
-    margin: 10
-  });
-}
-
+    const card = cards[idx];
+    mainDiv.innerHTML = `
+      <section class="big-barcode">
+        <svg id="barcode"></svg>
+        <h2 style="margin:0.5em 0 0 0">${card.label}</h2>
+        <p style="margin:0">${card.code}</p>
+      </section>
+      <div class="barcode-controls">
+        <button id="back-btn">← Back</button>
+        <button id="delete-btn" class="secondary">Delete</button>
+      </div>
+    `;
+    document.getElementById('back-btn').onclick = renderList;
+    document.getElementById('delete-btn').onclick = () => {
+      if (confirm("Are you sure you want to delete this card?")) {
+        cards.splice(idx, 1);
+        save();
+        renderList();
+      }
+    };
+    JsBarcode("#barcode", sanitize(card.code), {
+      format: "CODE128",
+      width: sanitize(card.code).length > 12 ? 1 : 2,
+      height: 120,
+      displayValue: true,
+      margin: 10
+    });
+  }
 
   renderList();
+</script>
+
+<!-- Service Worker Registration for PWA -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(function(reg) {
+      // Registration worked
+    }).catch(function(error) {
+      // Registration failed
+    });
+}
 </script>
 </body>
 </html>
