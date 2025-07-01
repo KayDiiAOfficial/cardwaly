@@ -125,11 +125,15 @@
   </style>
 </head>
 <body>
+ 
 <main class="container">
   <!-- Replace "logo.png" with your own logo (must match manifest!) -->
   <img src="logo.png" alt="Logo" class="logo-top">
   <div id="main"></div>
 </main>
+   <footer style="margin-top:2em; text-align:center; color:#ffc;">
+    <a href="privacy.html" style="color:#ffc; text-decoration:underline;">Privacy Policy</a>
+    </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
@@ -158,7 +162,7 @@
         <input type="file" id="file-input" accept="image/*" capture="environment">
         <div id="preview"></div>
         <div style="display:flex; gap:0.5em;">
-          <button type="button" id="scan-btn" disabled>Scan & Save</button>
+          <button type="button" id="scan-btn" disabled>Save</button>
           <button type="button" id="manual-btn">Manual Entry</button>
         </div>
         <input type="text" id="label" placeholder="Card Label">
@@ -177,31 +181,40 @@
           manualEntry = document.getElementById('manual-entry-container');
     let codeVal = '';
 
-    fi.onchange = () => {
-      const file = fi.files[0];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      pb.innerHTML = `<img src="${url}"><span>Scanning...</span>`;
-      document.getElementById('camera-preview').innerHTML = '';
-      Quagga.decodeSingle({
+  fi.onchange = () => {
+    const file = fi.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    pb.innerHTML = `
+        <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="${url}">
+        <div id="scan-status" style="margin-top:0.5em; text-align:center;">Scanning...</div>
+        </div>
+    `;
+    document.getElementById('camera-preview').innerHTML = '';
+    Quagga.decodeSingle({
         src: url,
         numOfWorkers: 0,
         inputStream: { size: 1000 },
         locator: { patchSize: "large", halfSample: false },
         decoder: { readers: [
-          "code_128_reader","ean_reader","upc_reader","ean_8_reader","upc_e_reader"
+        "code_128_reader","ean_reader","upc_reader","ean_8_reader","upc_e_reader"
         ]},
         locate: true
-      }, result => {
+    }, result => {
+        const statusDiv = document.getElementById('scan-status');
         if (result && result.codeResult) {
-          codeVal = sanitize(result.codeResult.code);
-          pb.innerHTML += `<p>Found: ${codeVal}</p>`;
-          saveBtn.disabled = false;
+        codeVal = sanitize(result.codeResult.code);
+        statusDiv.style.color = "#fff";
+        statusDiv.innerHTML = `Found:<br>${codeVal}`;
+        saveBtn.disabled = false;
         } else {
-          pb.innerHTML += `<p style="color:red">No barcode found.</p>`;
+        statusDiv.style.color = "red";
+        statusDiv.innerHTML = "No barcode found.";
         }
-      });
+    });
     };
+
 
     saveBtn.onclick = () => {
       const lbl = document.getElementById('label').value || 'Untitled';
