@@ -3,125 +3,131 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>My Barcode Cards</title>
+  <title>CardWALY</title>
   <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <style>
-  /* Unified deep red background and main layout */
-body, html, main, #main {
-  background: #A62C2C;
-  color: #fff;
-}
-main.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 1em;
-}
-
-/* Card styling */
-.card {
-  background: #6d1c1c;
-  padding: 1em;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  margin: 0.5em 0;
-  width: 100%;
-  max-width: 400px;
-  cursor: pointer;
-}
-.card small { color: #ffc; }
-
-/* Center forms and barcode */
-form, .big-barcode {
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#preview, #camera-preview {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-/* --- BUTTONS: remove blue, set custom --- */
-button,
-button:focus,
-button:active,
-button:visited {
-  background: #6d1c1c !important;
-  color: #fff !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  transition: background 0.2s;
-}
-button:hover {
-  background: #882222 !important;
-}
-button.secondary,
-button.secondary:focus,
-button.secondary:active,
-button.secondary:visited {
-  background: #332222 !important;
-  color: #ccc !important;
-}
-button:focus-visible {
-  outline: none !important;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #a62c2c !important; /* subtle red focus ring */
-}
-button#add-btn,
-button#scan-btn,
-button#scan-live-btn {
-  background-color: #6d1c1c !important;
-  color: #fff !important;
-}
-
-/* General button styling */
-button {
-  width: auto;
-  max-width: 100%;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  border-radius: 8px;
-  margin: 0.25em;
-}
-
-/* Media preview and barcode */
-#preview img, #camera-preview video {
-  max-width: 100%;
-  border-radius: 8px;
-  margin: 1em 0;
-}
-svg {
-  background: #fff;
-  padding: 0.5em;
-  border-radius: 4px;
-  display: block;
-  margin: 1em auto 0.5em auto;
-  max-width: 100%;
-}
-
-/* Center "Back" and "Delete" below barcode */
-.barcode-controls {
-  display: flex;
-  gap: 1em;
-  justify-content: center;
-  margin-top: 1em;
-  width: 100%;
-  max-width: 400px;
-}
-
+    body, html, main, #main { background: #A62C2C; color: #fff; }
+    main.container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1em;
+    }
+    .card {
+      background: #6d1c1c;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      margin: 0.5em 0;
+      width: 100%;
+      max-width: 400px;
+      cursor: pointer;
+    }
+    .card small { color: #ffc; }
+    form, .big-barcode {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #preview, #camera-preview {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    button,
+    button:focus,
+    button:active,
+    button:visited {
+      background: #6d1c1c !important;
+      color: #fff !important;
+      border: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #882222 !important;
+    }
+    button.secondary,
+    button.secondary:focus,
+    button.secondary:active,
+    button.secondary:visited {
+      background: #332222 !important;
+      color: #ccc !important;
+    }
+    button:focus-visible {
+      outline: none !important;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #a62c2c !important;
+    }
+    button#add-btn,
+    button#scan-btn,
+    button#manual-btn {
+      background-color: #6d1c1c !important;
+      color: #fff !important;
+    }
+    button {
+      width: auto;
+      max-width: 100%;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      border-radius: 8px;
+      margin: 0.25em;
+    }
+    #preview img, #camera-preview video {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 1em 0;
+    }
+    svg {
+      background: #fff;
+      padding: 0.5em;
+      border-radius: 4px;
+      display: block;
+      margin: 1em auto 0.5em auto;
+      max-width: 100%;
+    }
+    .barcode-controls {
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      margin-top: 1em;
+      width: 100%;
+      max-width: 400px;
+    }
+    .logo-top {
+      width: 120px;
+      display: block;
+      margin: 2em auto 1em auto;
+    }
+    #manual-entry-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5em;
+      width: 100%;
+      margin-top: 1em;
+      display: none;
+    }
+    #manual-barcode {
+      width: 100%;
+      max-width: 250px;
+      text-align: center;
+      font-size: 1.1em;
+      border-radius: 6px;
+      border: none;
+      padding: 0.4em 0.6em;
+    }
   </style>
 </head>
 <body>
 <main class="container">
-  <img src="logo.png" alt="My Barcodes" style="width:120px; display:block; margin:2em auto 1em auto;">
+  <!-- Replace with your logo source below! -->
+  <img src="logo.png" alt="Logo" class="logo-top">
   <div id="main"></div>
 </main>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
@@ -150,28 +156,40 @@ svg {
         <input type="file" id="file-input" accept="image/*" capture="environment">
         <div id="preview"></div>
         <div style="display:flex; gap:0.5em;">
-          <button type="button" id="scan-live-btn">📷 Scan Live</button>
           <button type="button" id="scan-btn" disabled>Scan & Save</button>
+          <button type="button" id="manual-btn">Manual Entry</button>
         </div>
         <input type="text" id="label" placeholder="Card Label">
         <button type="button" id="cancel-btn" class="secondary">Cancel</button>
         <div id="camera-preview"></div>
+        <div id="manual-entry-container">
+          <label for="manual-barcode" style="margin-top:1em;">Enter Barcode Number</label>
+          <input type="text" id="manual-barcode" placeholder="e.g. 7000849292276339">
+          <button type="button" id="manual-save-btn">Save Barcode</button>
+        </div>
       </form>`;
     const fi = document.getElementById('file-input'),
           pb = document.getElementById('preview'),
           saveBtn = document.getElementById('scan-btn'),
-          liveBtn = document.getElementById('scan-live-btn');
+          manualBtn = document.getElementById('manual-btn'),
+          manualEntry = document.getElementById('manual-entry-container');
     let codeVal = '';
 
     fi.onchange = () => {
       const file = fi.files[0];
       if (!file) return;
       const url = URL.createObjectURL(file);
-      pb.innerHTML = `<img src="${url}"><p>Scanning…</p>`;
+      pb.innerHTML = `<img src="${url}"><span>Scanning...</span>`;
       document.getElementById('camera-preview').innerHTML = '';
       Quagga.decodeSingle({
-        src: url, numOfWorkers: 0,
-        decoder: { readers:["code_128_reader","ean_reader","upc_reader","ean_8_reader","upc_e_reader"] }
+        src: url,
+        numOfWorkers: 0,
+        inputStream: { size: 1000 },
+        locator: { patchSize: "large", halfSample: false },
+        decoder: { readers: [
+          "code_128_reader","ean_reader","upc_reader","ean_8_reader","upc_e_reader"
+        ]},
+        locate: true
       }, result => {
         if (result && result.codeResult) {
           codeVal = sanitize(result.codeResult.code);
@@ -185,81 +203,71 @@ svg {
 
     saveBtn.onclick = () => {
       const lbl = document.getElementById('label').value || 'Untitled';
+      if (!codeVal) return;
       cards.push({ label: lbl, code: codeVal });
       save();
       renderList();
     };
 
-    liveBtn.onclick = startLiveScan;
-    document.getElementById('cancel-btn').onclick = () => {
-    if (Quagga && Quagga._scannerRunning) {
-        Quagga.stop();
-        Quagga.offDetected();
-    }
-    renderList();
+    // Manual entry handling
+    manualBtn.onclick = () => {
+      manualEntry.style.display = manualEntry.style.display === 'flex' ? 'none' : 'flex';
+      document.getElementById('manual-barcode').focus();
+    };
+    document.getElementById('manual-save-btn').onclick = () => {
+      const code = sanitize(document.getElementById('manual-barcode').value);
+      const lbl = document.getElementById('label').value || 'Untitled';
+      if (!code) {
+        alert("Please enter a barcode value.");
+        return;
+      }
+      cards.push({ label: lbl, code });
+      save();
+      renderList();
     };
 
+    // Safe cancel
+    document.getElementById('cancel-btn').onclick = () => {
+      try {
+        if (Quagga && Quagga._scannerRunning) {
+          Quagga.stop();
+          Quagga.offDetected();
+        }
+      } catch (e) {}
+      renderList();
+    };
   }
 
   function showCard(idx) {
-    const card = cards[idx];
-    mainDiv.innerHTML = `
-      <section class="big-barcode">
-        <svg id="barcode"></svg>
-        <h2 style="margin:0.5em 0 0 0">${card.label}</h2>
-        <p style="margin:0">${card.code}</p>
-      </section>
-      <div class="barcode-controls">
-        <button id="back-btn">← Back</button>
-        <button id="delete-btn" class="secondary">Delete</button>
-      </div>
-    `;
-    document.getElementById('back-btn').onclick = renderList;
-    document.getElementById('delete-btn').onclick = () => {
+  const card = cards[idx];
+  mainDiv.innerHTML = `
+    <section class="big-barcode">
+      <svg id="barcode"></svg>
+      <h2 style="margin:0.5em 0 0 0">${card.label}</h2>
+      <p style="margin:0">${card.code}</p>
+    </section>
+    <div class="barcode-controls">
+      <button id="back-btn">← Back</button>
+      <button id="delete-btn" class="secondary">Delete</button>
+    </div>
+  `;
+  document.getElementById('back-btn').onclick = renderList;
+  document.getElementById('delete-btn').onclick = () => {
+    if (confirm("Are you sure you want to delete this card?")) {
       cards.splice(idx, 1);
       save();
       renderList();
-    };
-    JsBarcode("#barcode", sanitize(card.code), {
-      format: "CODE128",
-      width: sanitize(card.code).length > 12 ? 1 : 2,
-      height: 120,
-      displayValue: true,
-      margin: 10
-    });
-  }
+    }
+  };
+  JsBarcode("#barcode", sanitize(card.code), {
+    format: "CODE128",
+    width: sanitize(card.code).length > 12 ? 1 : 2,
+    height: 120,
+    displayValue: true,
+    margin: 10
+  });
+}
 
-  function startLiveScan() {
-    const preview = document.getElementById('camera-preview'),
-          pb = document.getElementById('preview');
-    pb.innerHTML = '';
-    preview.innerHTML = `<p>Scanning live…</p>`;
-
-    Quagga.init({
-      inputStream: {
-        name: "Live",
-        type: "LiveStream",
-        target: preview,
-        constraints: { facingMode: "environment" }
-      },
-      decoder: { readers:["code_128_reader","ean_reader","upc_reader","ean_8_reader","upc_e_reader"] }
-    }, err => {
-      if (err) {
-        alert("Camera init failed: " + err.message);
-        return;
-      }
-      Quagga.start();
-    });
-
-    Quagga.onDetected(result => {
-      const code = sanitize(result.codeResult.code);
-      Quagga.stop();
-      Quagga.offDetected();
-      cards.push({ label: document.getElementById('label').value || 'Scanned', code });
-      save();
-      renderList();
-    });
-  }
 
   renderList();
 </script>
